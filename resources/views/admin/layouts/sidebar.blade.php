@@ -21,21 +21,21 @@
             </li>
 
             <li class="sidebar-dropdown">
-                <a href="javascript:void(0)"><i class="uil uil-wheelchair ms-2 d-inline-block"></i>سفارش ها</a>
-                <div class="sidebar-submenu">
-                    <ul>
-                        <li><a href="{{route('admin.order.index')}}">لیست</a></li>
-                        <li><a href="{{route('admin.order.create')}}">افزودن</a></li>
-                    </ul>
-                </div>
-            </li>
-
-            <li class="sidebar-dropdown">
                 <a href="javascript:void(0)"><i class="uil uil-wheelchair ms-2 d-inline-block"></i>دسته بندی</a>
                 <div class="sidebar-submenu">
                     <ul>
                         <li><a href="{{route('admin.category.index')}}">لیست</a></li>
                         <li><a href="{{route('admin.category.create')}}">افزودن</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="sidebar-dropdown">
+                <a href="javascript:void(0)"><i class="uil uil-wheelchair ms-2 d-inline-block"></i>سفارش ها</a>
+                <div class="sidebar-submenu">
+                    <ul>
+                        <li><a href="{{route('admin.order.index')}}">لیست</a></li>
+                        <li><a href="{{route('admin.order.create')}}">افزودن</a></li>
                     </ul>
                 </div>
             </li>

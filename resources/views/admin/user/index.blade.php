@@ -44,14 +44,15 @@
                                     </td>
                                     <td class="p-3">{{$user->created_at}}</td>
                                     <td class="text-start">
-                                        <a href="#" class="btn btn-icon btn-pills btn-soft-primary"
-                                           data-bs-toggle="modal" data-bs-target="#viewprofile"><i
-                                                    class="uil uil-eye"></i></a>
-                                        <a href="#" class="btn btn-icon btn-pills btn-soft-success"
-                                           data-bs-toggle="modal" data-bs-target="#editprofile"><i
-                                                    class="uil uil-pen"></i></a>
-                                        <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i
-                                                    class="uil uil-trash"></i></a>
+                                        <a href="#" class="btn btn-icon btn-pills btn-soft-primary user-show" id="{{$user->id}}">
+                                            <i class="uil uil-eye"></i>
+                                        </a>
+                                        <a href="{{route('admin.user.edit',['user'=>$user->id])}}" class="btn btn-icon btn-pills btn-soft-success">
+                                            <i class="uil uil-pen"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-icon btn-pills btn-soft-danger user-delete" id="{{$user->id}}">
+                                            <i class="uil uil-trash"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -70,10 +71,58 @@
     </div>
 
     @include('admin.user.show')
-    @include('admin.user.update')
-
 @endsection
 
 @section('custom-script')
+    <script>
+        $(document).ready(function () {
+            $(".user-show").click(function () {
+                var idValue = $(this).attr("id");
+                var url = "{{ route('admin.user.show', ['user' => '__ID__']) }}".replace('__ID__', idValue);
+
+                $.ajax({
+                    url: url,
+                    method: "GET",
+                    data: { id: idValue },
+                    success: function (response) {
+
+                        $("#viewprofile .modal-body h5.mb-0").text(response.username); // جایگزینی نام کاربر
+                        $("#viewprofile .modal-body .d-flex:nth-child(1) p.text-muted").eq(0).text(response.address); // ایمیل
+                        $("#viewprofile .modal-body .d-flex:nth-child(1) p.text-muted").eq(1).text(response.created_at); // آدرس
+                        $("#viewprofile .modal-body .d-flex:nth-child(2) p.text-muted").eq(0).text(response.address); // تاریخ
+
+                        $("#viewprofile").modal("show");
+
+                    },
+                    error: function (xhr, status, error) {
+                        alert("مشکلی در ارسال درخواست رخ داده است.");
+                    }
+                });
+            });
+
+            $(".user-delete").click(function () {
+                var idValue = $(this).attr("id");
+                var url = "{{ route('admin.user.destroy', ['user' => '__ID__']) }}".replace('__ID__', idValue);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    dataType: 'json',
+                    success: function (data) {
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 3000);
+                    },
+                })
+
+            });
+        });
+    </script>
 
 @endsection

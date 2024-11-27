@@ -55,7 +55,7 @@ Route::name('client.')
 
 Route::prefix('admin')
     ->name('admin.')
-    ->middleware('auth:web')
+    ->middleware(['auth:web', 'isAdmin'])
     ->group(function () {
         Route::get('dashboard', [AdminHomeController::class, 'dashboard'])->name('dashboard');
 
