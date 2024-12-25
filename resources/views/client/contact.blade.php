@@ -4,6 +4,13 @@
 
 @include('client.layouts.breadcrumb',['title' => 'تماس باما'])
 
+<style>
+    .fade-out {
+        opacity: 0;
+        transition: opacity 2s ease;
+    }
+</style>
+
 <!-- Start Contact Section -->
 <section class="section-padding">
     <div class="container rtl">
@@ -11,44 +18,43 @@
             <div class="col-lg-8 align-self-center">
                 <div class="contact-form">
                     <h2>در تماس باشید</h2>
-                    <form id="contact-form" action="https://preetheme.com/html/fruits/mail.php" method="POST">
+                    <form action="{{route('client.contact.store')}}" method="POST">
+                        @csrf
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="single-input">
-                                    <input type="text" name="name" placeholder="نام و نام خانوادگی">
+                                    <input type="text" name="username" placeholder="نام و نام خانوادگی">
                                     <i class="fas fa-user"></i>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="single-input">
-                                    <input type="email" name="email" placeholder="ایمیل">
-                                    <i class="far fa-envelope"></i>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="single-input">
-                                    <input type="text" name="phone" placeholder="موبایل">
+                                    <input type="text" name="mobile" placeholder="موبایل">
                                     <i class="fas fa-mobile-alt"></i>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="single-input">
-                                    <input type="text" name="subject" placeholder="موضوعات">
+                                    <input type="text" name="title" placeholder="موضوع">
                                     <i class="fas fa-file-alt"></i>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="single-input">
-                                    <textarea name="message" placeholder="متن" spellcheck="false"></textarea>
+                                    <textarea name="description" placeholder="متن" spellcheck="false"></textarea>
                                     <i class="fas fa-pen"></i>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <button type="submit" class="button-1">ارسال</button>
+                            <div class="row">
+                                <div class="col-2">
+                                    <button type="submit" class="button-1">ارسال</button>
+                                </div>
+                                <div class="col-10 mt-1">
+                                    @include('client.layouts.alert')
+                                </div>
                             </div>
                         </div>
                     </form>
-                    <p class="ajax-response"></p>
                 </div>
             </div>
             <div class="col-lg-4 align-self-center">
@@ -61,7 +67,7 @@
                             </div>
                             <div class="content">
                                 <h4>مکان ها</h4>
-                                <p>تهران، تجریش، پاساژ ارگ طبقه دوم واحد 122</p>
+                                <p>تهران، میدان انقلاب</p>
                             </div>
                         </div>
                         <div class="item mb-20">
@@ -80,8 +86,8 @@
                             </div>
                             <div class="content">
                                 <h4>تماس باما</h4>
-                                <p> (021)345578</p>
-                                <p>09129354776 </p>
+                                <p>88888888 (021)</p>
+                                <p> 09228598461 </p>
                             </div>
                         </div>
                     </div>
@@ -93,5 +99,20 @@
 <!-- End Contact Section -->
 
 @include('client.layouts.footer')
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const alerts = document.querySelectorAll('.alert-success');
+
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                alert.classList.add('fade-out');
+                setTimeout(() => {
+                    alert.remove();
+                }, 2000);
+            }, 2000);
+        });
+    });
+</script>
 
 </html>

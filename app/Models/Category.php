@@ -12,7 +12,7 @@ class Category extends Model
 
     protected $table = 'categories';
 
-    protected $fillable = ['name', 'status', 'slug'];
+    protected $fillable = ['name', 'status', 'image', 'slug'];
 
     /**
      * @return HasMany

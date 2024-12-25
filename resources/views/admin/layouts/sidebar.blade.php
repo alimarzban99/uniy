@@ -8,10 +8,11 @@
         </div>
 
         <ul class="sidebar-menu pt-3">
-            <li><a href="{{route('admin.dashboard')}}"><i class="uil uil-dashboard ms-2 d-inline-block"></i>داشبرد</a></li>
+            <li><a href="{{route('admin.dashboard')}}"><i class="uil uil-dashboard ms-2 d-inline-block"></i>داشبرد</a>
+            </li>
 
             <li class="sidebar-dropdown">
-                <a href="javascript:void(0)"><i class="uil uil-wheelchair ms-2 d-inline-block"></i>کاربران</a>
+                <a href="javascript:void(0)"><i class="uil uil-user ms-2 d-inline-block"></i>کاربران</a>
                 <div class="sidebar-submenu">
                     <ul>
                         <li><a href="{{route('admin.user.index')}}">لیست</a></li>
@@ -30,18 +31,12 @@
                 </div>
             </li>
 
-            <li class="sidebar-dropdown">
-                <a href="javascript:void(0)"><i class="uil uil-wheelchair ms-2 d-inline-block"></i>سفارش ها</a>
-                <div class="sidebar-submenu">
-                    <ul>
-                        <li><a href="{{route('admin.order.index')}}">لیست</a></li>
-                        <li><a href="{{route('admin.order.create')}}">افزودن</a></li>
-                    </ul>
-                </div>
+            <li><a href="{{route('admin.order.index')}}"><i class="uil uil-shop ms-2 d-inline-block"></i>سفارش ها</a>
             </li>
 
+
             <li class="sidebar-dropdown">
-                <a href="javascript:void(0)"><i class="uil uil-wheelchair ms-2 d-inline-block"></i>محصولات</a>
+                <a href="javascript:void(0)"><i class="uil uil-shop ms-2 d-inline-block"></i>محصولات</a>
                 <div class="sidebar-submenu">
                     <ul>
                         <li><a href="{{route('admin.product.index')}}">لیست</a></li>
@@ -51,7 +46,7 @@
             </li>
 
             <li class="sidebar-dropdown">
-                <a href="javascript:void(0)"><i class="uil uil-wheelchair ms-2 d-inline-block"></i>وبلاگ</a>
+                <a href="javascript:void(0)"><i class="uil uil-postcard ms-2 d-inline-block"></i>وبلاگ</a>
                 <div class="sidebar-submenu">
                     <ul>
                         <li><a href="{{route('admin.blog.index')}}">لیست</a></li>
@@ -59,6 +54,9 @@
                     </ul>
                 </div>
             </li>
+
+            <li><a href="{{route('admin.contact.index')}}"><i class="uil uil-wheelchair ms-2 d-inline-block"></i>تماس با
+                    ما</a></li>
 
         </ul>
         <!-- sidebar-menu  -->

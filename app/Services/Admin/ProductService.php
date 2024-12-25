@@ -2,13 +2,26 @@
 
 namespace App\Services\Admin;
 
+use App\Http\DTO\Admin\Product\ProductStoreDTO;
+use App\Http\DTO\Admin\Product\ProductUpdateDTO;
 use App\Models\Product;
-use App\Models\User;
+use App\Services\Admin\Trait\UploadImageTrait;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
-readonly class ProductService
+class ProductService
 {
-    public function __construct(private Product $product)
+    use UploadImageTrait;
+
+    /**
+     * @var string
+     */
+    private string $basePath = 'product';
+
+    /**
+     * @param Product $product
+     */
+    public function __construct(private readonly Product $product)
     {
     }
 
@@ -32,6 +45,35 @@ readonly class ProductService
     }
 
     /**
+     * @param ProductStoreDTO $storeDTO
+     * @return void
+     */
+    public function store(ProductStoreDTO $storeDTO): void
+    {
+        $data = $storeDTO->toArray();
+        $path = $this->uploadImage($storeDTO->image);
+        $data['image'] = $path;
+
+        $this->product->query()->create($data);
+    }
+
+    /**
+     * @param int $id
+     * @param ProductUpdateDTO $updateDTO
+     * @return void
+     */
+    public function update(int $id, ProductUpdateDTO $updateDTO): void
+    {
+        $data = $updateDTO->toArray();
+        $path = $this->uploadImage($updateDTO->image);
+        $data['image'] = $path;
+
+        $this->product->query()
+            ->where('id', '=', $id)
+            ->update($data);
+    }
+
+    /**
      * @param int $id
      * @return bool|null
      */
@@ -43,24 +85,21 @@ readonly class ProductService
     }
 
     /**
-     * @param int $id
-     * @param array $all
-     * @return void
+     * @return Collection
      */
-    public function update(int $id, array $all): void
+    public function categoryList(): Collection
     {
-        $this->product->query()
-            ->where('id', '=', $id)
-            ->update($all);
+        return app(CategoryService::class)->list();
     }
 
     /**
-     * @param array $only
-     * @return void
+     * @param int $id
+     * @return bool
      */
-    public function store(array $only): void
+    public function featured(int $id): bool
     {
-        $this->product->query()->create($only);
+        $product = $this->product->query()->findOrFail($id);
+        return $product->update(['is_featured' => !$product->is_featured]);
     }
 
 }

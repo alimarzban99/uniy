@@ -2,12 +2,27 @@
 
 namespace App\Services\Admin;
 
+use App\Enums\Status;
+use App\Http\DTO\Admin\Category\CategoryStoreDTO;
+use App\Http\DTO\Admin\Category\CategoryUpdateDTO;
 use App\Models\Category;
+use App\Services\Admin\Trait\UploadImageTrait;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
-readonly class CategoryService
+class CategoryService
 {
-    public function __construct(private Category $category)
+    use UploadImageTrait;
+
+    /**
+     * @var string
+     */
+    private string $basePath = 'category';
+
+    /**
+     * @param Category $category
+     */
+    public function __construct(private readonly Category $category)
     {
     }
 
@@ -31,6 +46,36 @@ readonly class CategoryService
     }
 
     /**
+     * @param CategoryStoreDTO $storeDTO
+     * @return void
+     */
+    public function store(CategoryStoreDTO $storeDTO): void
+    {
+        $data = $storeDTO->toArray();
+        $path = $this->uploadImage($storeDTO->image);
+        $data['image'] = $path;
+
+        $this->category->query()->create($data);
+    }
+
+    /**
+     * @param int $id
+     * @param CategoryUpdateDTO $updateDTO
+     * @return void
+     *
+     */
+    public function update(int $id, CategoryUpdateDTO $updateDTO): void
+    {
+        $data = $updateDTO->toArray();
+        $path = $this->uploadImage($updateDTO->image);
+        $data['image'] = $path;
+
+        $this->category->query()
+            ->where('id', '=', $id)
+            ->update($data);
+    }
+
+    /**
      * @param int $id
      * @return bool|null
      */
@@ -42,24 +87,14 @@ readonly class CategoryService
     }
 
     /**
-     * @param int $id
-     * @param array $all
-     * @return void
+     * @return Collection
      */
-    public function update(int $id, array $all): void
+    public function list(): Collection
     {
-        $this->category->query()
-            ->where('id', '=', $id)
-            ->update($all);
-    }
-
-    /**
-     * @param array $only
-     * @return void
-     */
-    public function store(array $only): void
-    {
-        $this->category->query()->create($only);
+        return $this->category->query()
+            ->where('status', '=', Status::PUBLISHED->value)
+            ->orderByDesc('id')
+            ->pluck('name', 'id');
     }
 
 }

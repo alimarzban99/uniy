@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Services\Client\HomeService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -10,7 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    public function __construct()
+    /**
+     * @param HomeService $service
+     */
+    public function __construct(private readonly HomeService $service)
     {
     }
 
@@ -19,7 +23,9 @@ class HomeController extends Controller
      */
     public function home()
     {
-        return view('client.home');
+        [$latestBlogs, $newestProducts, $featureProducts, $categories] = $this->service->home();
+        return view('client.home', compact(
+            'latestBlogs', 'newestProducts', 'featureProducts', 'categories'));
     }
 
     /**

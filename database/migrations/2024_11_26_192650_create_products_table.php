@@ -25,10 +25,9 @@ return new class extends Migration {
             $table->string('image');
 
             $table->bigInteger('price');
-            $table->bigInteger('discounted_price');
+            $table->tinyInteger('discount');
 
-            $table->tinyInteger('weight');
-            $table->tinyInteger('score');
+            $table->tinyInteger('score')->default(0);
 
             $table->boolean('is_featured')->index();
             $table->tinyInteger('status')->index();

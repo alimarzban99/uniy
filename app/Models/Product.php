@@ -16,11 +16,10 @@ class Product extends Model
         'slug',
         'description',
         'price',
-        'discounted_price',
+        'discount',
         'score',
         'image',
         'status',
-        'weight',
         'is_featured',
     ];
 
@@ -32,12 +31,22 @@ class Product extends Model
         return [
             'is_featured' => 'boolean',
             'price' => 'int',
-            'discounted_price' => 'int',
+            'discount' => 'int',
         ];
     }
 
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
+
+    public function getDiscountedPriceAttribute(): int
+    {
+        if ($this->attributes['discount'] > 0) {
+            return $this->attributes['price'] - ($this->attributes['price'] * ($this->attributes['discount'] / 100));
+        }
+
+        return 0;
+
     }
 }

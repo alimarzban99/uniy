@@ -10,6 +10,7 @@ use App\Http\Controllers\Client\ContactController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use Illuminate\Support\Facades\Route;
@@ -36,7 +37,9 @@ Route::name('client.')
     ->group(function () {
 
         Route::get('about', [HomeController::class, 'about'])->name('about');
-        Route::get('contact', [ContactController::class, 'index'])->name('contact');
+        Route::resource('contact', ContactController::class)
+            ->only('index', 'store');
+
         Route::resource('blog', BlogController::class)->only('index', 'show');
         Route::resource('product', ProductController::class)->only('index', 'show');
 
@@ -45,7 +48,8 @@ Route::name('client.')
                 Route::get('profile', [HomeController::class, 'profile'])
                     ->name('profile');
 
-                Route::get('cart', [CartController::class, 'index'])->name('cart');
+                Route::resource('cart', CartController::class)->except('show', 'edit', 'update');
+                Route::resource('order', OrderController::class);
                 Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
             });
 
@@ -65,6 +69,10 @@ Route::prefix('admin')
         Route::resource('contact', AdminContactController::class);
         Route::resource('user', UserController::class);
         Route::resource('category', CategoryController::class);
+
+        Route::post('product/featured/{product}', [AdminProductController::class, 'featured'])
+            ->name('product.featured');
+
 
     });
 

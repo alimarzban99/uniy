@@ -3,14 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\DTO\Admin\Blog\BlogStoreDTO;
+use App\Http\DTO\Admin\Blog\BlogUpdateDTO;
+use App\Http\Requests\Admin\Blog\BlogStoreRequest;
+use App\Http\Requests\Admin\Blog\BlogUpdateRequest;
 use App\Services\Admin\BlogService;
+use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
+use Throwable;
 
 class BlogController extends Controller
 {
@@ -40,17 +45,22 @@ class BlogController extends Controller
 
     public function create()
     {
-        return view('admin.blog.create');
+        $categories = $this->service->categoryList();
+        return view('admin.blog.create', compact('categories'));
     }
 
     /**
-     * @param Request $request
+     * @param BlogStoreRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(BlogStoreRequest $request)
     {
-        $this->service->store($request->only('blogname', 'email', 'address', 'is_admin', 'status'));
-        return response()->redirectToRoute('admin.blog.index');
+        try {
+            $this->service->store(BlogStoreDTO::fromRequest($request));
+            return response()->redirectToRoute('admin.blog.index');
+        } catch (Exception $exception) {
+            return response()->redirectToRoute('admin.blog.create')->withErrors($exception->getMessage());
+        }
     }
 
     /**
@@ -60,18 +70,19 @@ class BlogController extends Controller
     public function edit(int $id)
     {
         $data = $this->service->findOne($id);
-        return view('admin.blog.update', compact('data'));
+        $categories = $this->service->categoryList();
+        return view('admin.blog.update', compact('data', 'categories'));
 
     }
 
     /**
-     * @param Request $request
+     * @param BlogUpdateRequest $request
      * @param int $id
      * @return RedirectResponse
      */
-    public function update(Request $request, int $id)
+    public function update(BlogUpdateRequest $request, int $id)
     {
-        $this->service->update($id, $request->only('blogname', 'address', 'email', 'is_admin', 'status'));
+        $this->service->update($id, BlogUpdateDTO::fromRequest($request));
         return response()->redirectToRoute('admin.blog.index');
     }
 

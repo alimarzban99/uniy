@@ -42,14 +42,16 @@
                                     </td>
                                     <td class="p-3">{{$product->created_at}}</td>
                                     <td class="text-start">
-                                        <a href="#" class="btn btn-icon btn-pills btn-soft-primary"
-                                           data-bs-toggle="modal" data-bs-target="#viewprofile"><i
-                                                class="uil uil-eye"></i></a>
-                                        <a href="#" class="btn btn-icon btn-pills btn-soft-success"
-                                           data-bs-toggle="modal" data-bs-target="#editprofile"><i
-                                                class="uil uil-pen"></i></a>
-                                        <a href="#" class="btn btn-icon btn-pills btn-soft-danger"><i
-                                                class="uil uil-trash"></i></a>
+                                        <a href="{{route('admin.product.edit',['product'=>$product->id])}}" class="btn btn-icon btn-pills btn-soft-success">
+                                            <i class="uil uil-pen"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-icon btn-pills btn-soft-danger product-delete" id="{{$product->id}}">
+                                            <i class="uil uil-trash"></i>
+                                        </a>
+
+                                        <a href="#" class="btn btn-icon btn-pills btn-soft-primary product-is-featured" id="{{$product->id}}">
+                                            <i class="uil uil-star"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -67,5 +69,58 @@
             <!--end row-->
         </div>
     </div>
+
+@endsection
+
+@section('custom-script')
+    <script>
+        $(document).ready(function () {
+            $(".product-delete").click(function () {
+                var idValue = $(this).attr("id");
+                var url = "{{ route('admin.product.destroy', ['product' => '__ID__']) }}".replace('__ID__', idValue);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    dataType: 'json',
+                    success: function () {
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 500);
+                    },
+                })
+
+            });
+
+            $(".product-is-featured").click(function () {
+                var idValue = $(this).attr("id");
+                var url = "{{ route('admin.product.featured', ['product' => '__ID__']) }}".replace('__ID__', idValue);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function () {
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 500);
+                    },
+                })
+
+            });
+        });
+    </script>
 
 @endsection

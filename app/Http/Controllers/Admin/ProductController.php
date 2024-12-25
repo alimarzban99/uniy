@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\DTO\Admin\Product\ProductStoreDTO;
+use App\Http\DTO\Admin\Product\ProductUpdateDTO;
+use App\Http\Requests\Admin\Product\ProductStoreRequest;
+use App\Http\Requests\Admin\Product\ProductUpdateRequest;
 use App\Services\Admin\ProductService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 use Throwable;
 
@@ -41,16 +44,17 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('admin.product.create');
+        $categories = $this->service->categoryList();
+        return view('admin.product.create', compact('categories'));
     }
 
     /**
-     * @param Request $request
+     * @param ProductStoreRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
-        $this->service->store($request->only('productname', 'email', 'address', 'is_admin', 'status'));
+        $this->service->store(ProductStoreDTO::fromRequest($request));
         return response()->redirectToRoute('admin.product.index');
     }
 
@@ -61,18 +65,20 @@ class ProductController extends Controller
     public function edit(int $id)
     {
         $data = $this->service->findOne($id);
-        return view('admin.product.update', compact('data'));
+        $categories = $this->service->categoryList();
+
+        return view('admin.product.update', compact('data', 'categories'));
 
     }
 
     /**
-     * @param Request $request
+     * @param ProductUpdateRequest $request
      * @param int $id
      * @return RedirectResponse
      */
-    public function update(Request $request, int $id)
+    public function update(ProductUpdateRequest $request, int $id)
     {
-        $this->service->update($id, $request->only('productname', 'address', 'email', 'is_admin', 'status'));
+        $this->service->update($id, ProductUpdateDTO::fromRequest($request));
         return response()->redirectToRoute('admin.product.index');
     }
 
@@ -84,6 +90,16 @@ class ProductController extends Controller
     {
         try {
             $data = $this->service->destroy($id);
+            return response()->json($data, ResponseAlias::HTTP_OK);
+        } catch (Throwable $exception) {
+            return response()->json($exception->getMessage(), ResponseAlias::HTTP_OK);
+        }
+    }
+
+    public function featured(int $id)
+    {
+        try {
+            $data = $this->service->featured($id);
             return response()->json($data, ResponseAlias::HTTP_OK);
         } catch (Throwable $exception) {
             return response()->json($exception->getMessage(), ResponseAlias::HTTP_OK);

@@ -2,14 +2,23 @@
 
 namespace App\Services\Admin;
 
+use App\Http\DTO\Admin\Blog\BlogStoreDTO;
+use App\Http\DTO\Admin\Blog\BlogUpdateDTO;
 use App\Models\Blog;
-use App\Models\Product;
-use App\Models\User;
+use App\Services\Admin\Trait\UploadImageTrait;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
-readonly class BlogService
+class BlogService
 {
-    public function __construct(private Blog $blog)
+    use UploadImageTrait;
+
+    /**
+     * @var string
+     */
+    private string $basePath = 'blog';
+
+    public function __construct(private readonly Blog $blog)
     {
     }
 
@@ -33,6 +42,35 @@ readonly class BlogService
     }
 
     /**
+     * @param BlogStoreDTO $storeDTO
+     * @return void
+     */
+    public function store(BlogStoreDTO $storeDTO): void
+    {
+        $data = $storeDTO->toArray();
+        $path = $this->uploadImage($storeDTO->image);
+        $data['image'] = $path;
+
+        $this->blog->query()->create($data);
+    }
+
+    /**
+     * @param int $id
+     * @param BlogUpdateDTO $updateDTO
+     * @return void
+     */
+    public function update(int $id, BlogUpdateDTO $updateDTO): void
+    {
+        $data = $updateDTO->toArray();
+        $path = $this->uploadImage($updateDTO->image);
+        $data['image'] = $path;
+
+        $this->blog->query()
+            ->where('id', '=', $id)
+            ->update($data);
+    }
+
+    /**
      * @param int $id
      * @return bool|null
      */
@@ -44,24 +82,12 @@ readonly class BlogService
     }
 
     /**
-     * @param int $id
-     * @param array $all
-     * @return void
+     * @return Collection
      */
-    public function update(int $id, array $all): void
+    public function categoryList(): Collection
     {
-        $this->blog->query()
-            ->where('id', '=', $id)
-            ->update($all);
+        return app(CategoryService::class)->list();
     }
 
-    /**
-     * @param array $only
-     * @return void
-     */
-    public function store(array $only): void
-    {
-        $this->blog->query()->create($only);
-    }
 
 }

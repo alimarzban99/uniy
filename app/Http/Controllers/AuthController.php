@@ -53,7 +53,6 @@ class AuthController extends Controller
             $result = $this->service->doLogin(UserLoginDTO::fromRequest($request));
             return response()->redirectTo(route('home'));
         } catch (Throwable $exception) {
-            dd($exception);
             return redirect()->back()->withErrors($exception->getMessage());
         }
     }

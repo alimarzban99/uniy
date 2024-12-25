@@ -90,6 +90,11 @@
                                         <label>ایمیل</label>
                                         <input type="text" name="email" value="{{auth()->user()->email}}">
                                     </div>
+
+                                    <div class="single-field">
+                                        <label>موبایل</label>
+                                        <input type="text" name="mobile" value="{{auth()->user()->mobile}}">
+                                    </div>
                                     <div class="single-field">
                                         <label>رمز عبور</label>
                                         <input type="password" name="password" placeholder="رمز عبور">

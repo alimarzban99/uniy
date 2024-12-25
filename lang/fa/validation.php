@@ -230,6 +230,13 @@ return [
         'link' => 'لینک',
         'mobile_number' => 'شماره تماس',
         'work_number' => 'شماره تماس ثابت',
+        'category_id' => 'دسته بندی',
+        'slug' => 'آدری اینترنتی',
+        'status' => 'وضعیت',
+        'summary' => 'خلاصه',
+        'discount' => 'تخفیف',
+        'weight' => 'وزن',
+        'is_featured' => 'محصول ویژه',
     ],
 
 ];

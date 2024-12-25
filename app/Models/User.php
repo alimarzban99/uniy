@@ -18,7 +18,7 @@ class User extends Authenticatable
     /**
      * @var string[]
      */
-    protected $fillable = ['username', 'email', 'password', 'email_verified_at', 'address', 'is_admin', 'status'];
+    protected $fillable = ['username', 'email', 'mobile', 'password', 'email_verified_at', 'address', 'is_admin', 'status'];
 
     /**
      * @var string[]
@@ -40,7 +40,7 @@ class User extends Authenticatable
     protected function createdAt(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => Carbon::parse($value)->format('H:i Y-m-d'),
+            get: fn(string $value) => Carbon::parse($value)->format('H:i Y-m-d'),
         );
     }
 }

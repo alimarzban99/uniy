@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html  class="no-js" lang="fa">
+<html class="no-js" lang="fa">
 
 @include('client.layouts.navbar',['title'=>'بررسی'])
 
@@ -11,120 +11,55 @@
         <div class="row">
             <div class="col-lg-8 mb-30">
                 <div class="checkout-form-main">
-                    <h2>جزئیات صورتحساب</h2>
-                    <form action="#">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="input-field">
-                                    <label>نام *</label>
-                                    <input type="text" required="required" name="namme">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="input-field">
-                                    <label>نام خانوادگی *</label>
-                                    <input type="text" required="required" name="lnamme">
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="input-field">
-                                    <label>نام شرکت </label>
-                                    <input type="text" name="companyname">
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="input-field">
-                                    <label>ایمیل * </label>
-                                    <input type="email" name="email">
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="input-field">
-                                    <label>موبایل * </label>
-                                    <input type="text" name="phone">
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="input-field">
-                                    <label>کشور * </label>
-                                    <select name="country">
-                                        <option value="0">انگلستان</option>
-                                        <option value="1">چین</option>
-                                        <option value="2">عربستان</option>
-                                        <option value="3">آلمان</option>
-                                        <option value="4">فرانسه</option>
-                                        <option value="5">ژاپن</option>
-                                        <option value="6">بنگلادش</option>
-                                        <option value="7">هند</option>
-                                        <option value="8">لندن</option>
-                                        <option value="9">آفریقا</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="input-field">
-                                    <label>زیپ * </label>
-                                    <input type="text" name="zip">
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="input-field">
-                                    <div class="form-check">
-                                        <label class="inline">
-                                            <input class="form-check-input" type="checkbox">
-                                            <span class="input"></span>به آدرس دیگری ارسال شود؟
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="input-field">
-                                    <label>یادداشت های سفارش (اختیاری) </label>
-                                    <textarea name="ordernote"></textarea>
-                                </div>
+                    <h2>اطلاعات گیرنده سفارش</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-field">
+                                <label>نام</label>
+                                <input type="text" required="required" name="username" disabled
+                                       value="{{auth()->user()->username}}">
                             </div>
                         </div>
-                    </form>
+                        <div class="col-md-6">
+                            <div class="input-field">
+                                <label>موبایل</label>
+                                <input type="text" required="required" name="mobile" disabled
+                                       value="{{auth()->user()->mobile}}">
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="input-field">
+                                <label>آدرس</label>
+                                <input type="text" name="address" disabled value="{{auth()->user()->address}}">
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="input-field">
+                                <label>یادداشت های سفارش (اختیاری) </label>
+                                <textarea name="note"></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-4 mb-30">
-                <div class="checkout-summery mb-30">
-                    <h2>صورتحساب</h2>
-                    <ul>
-                        <li>530 تومان <span> جمع کل :</span></li>
-                        <li>530 تومان <span> حمل دریایی</span></li>
-                        <li>530 تومان <span> تخفیف</span></li>
-                        <li>530 تومان <span> جمع : </span></li>
-                        <li><b>جمع کل</b><span><b> 530 تومان</b></span></li>
-                    </ul>
-                </div>
                 <div class="checkout-summery">
                     <h2>روش پرداخت</h2>
                     <div class="form-check">
                         <label class="inline">
-                            <input class="form-check-input" type="checkbox">
-                            <span class="input"></span>انتقال مستقیم بانکی
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <label class="inline">
-                            <input class="form-check-input" type="checkbox">
+                            <input class="form-check-input" type="radio" name="payment_method" value="cash" checked>
                             <span class="input"></span>پرداخت نقدی هنگام تحویل
                         </label>
                     </div>
                     <div class="form-check">
                         <label class="inline">
-                            <input class="form-check-input" type="checkbox">
-                            <span class="input"></span>پرداخت ها را چک کنید
+                            <input class="form-check-input" type="radio" name="payment_method" value="online">
+                            <span class="input"></span>درگاه اینترنتی
                         </label>
                     </div>
-                    <div class="form-check">
-                        <label class="inline">
-                            <input class="form-check-input" type="checkbox">
-                            <span class="input"></span>پی پال
-                        </label>
-                    </div>
-                    <button type="submit" class="button-1 mt-10">ثبت سفارش</button>
+                    <button type="submit" class="button-1 submit-order mt-10">ثبت سفارش</button>
                 </div>
             </div>
         </div>
@@ -134,5 +69,28 @@
 
 @include('client.layouts.footer')
 
+<script>
+    $(document).ready(function () {
+        // هنگام کلیک روی دکمه ثبت سفارش
+        $(".submit-order").on("click", function (event) {
+            event.preventDefault(); // جلوگیری از ارسال فرم (در صورت وجود)
 
+            let note = $("textarea[name='note']").val();
+            let paymentMethod = $("input[name='payment_method']:checked").val();
+
+            $.ajax({
+                url: "{{route('client.order.store')}}",
+                method: "POST",
+                data: {
+                    note: note,
+                    payment_method: paymentMethod,
+                    _token: $('meta[name="csrf-token"]').attr('content') // برای امنیت Laravel
+                },
+                success: function () {
+                    window.location.href = "{{route('client.cart.index')}}"
+                },
+            })
+        });
+    });
+</script>
 </html>

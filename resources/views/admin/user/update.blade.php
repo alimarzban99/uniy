@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="mt-4">
                     <div class="card border-0 p-4 rounded shadow">
-
+                        @include('admin.layouts.alert')
                         <form action="{{route('admin.user.update',['user'=>$data->id])}}" method="POST" class="mt-4">
                             @csrf
                             @method('PUT')

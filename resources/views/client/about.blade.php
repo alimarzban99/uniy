@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html  class="no-js" lang="fa">
+<html class="no-js" lang="fa">
 
 @include('client.layouts.navbar',['title'=>'درباره ما'])
 
@@ -43,9 +43,6 @@
         <div class="row">
             <div class="col-lg-8 offset-lg-2 text-center">
                 <div class="we-provied-contetn">
-                    <div class="video-btn">
-                        <a href="https://www.youtube.com/watch?v=sY2bdbsy3rg"><i class="fas fa-play"></i></a>
-                    </div>
                     <h2>ما یک تیم هستیم که بر ارائه بهترین غذای ارگانیک و تجربیات کاربر تمرکز دارد.</h2>
                     <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ </p>
                     <a class="button-1" href="{{route('client.product.index')}}">اکنون خرید کنید</a>
@@ -126,68 +123,6 @@
     </div>
 </section>
 <!-- End Team Area -->
-<!-- Start Testimonial Area -->
-<section class="client-testimonial pb-70">
-    <div class="container">
-        <!-- Section Headding -->
-        <div class="row">
-            <div class="col-lg-12 rtl">
-                <div class="section-headding text-center  mb-50">
-                    <h2><span>بازخورد مشتریان</span></h2>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="client-testimonial-full owl-carousel">
-                    <!-- Single -->
-                    <div class="testimonial-item rtl">
-                        <div class="thumbnail">
-                            <img src="{{asset('assets/img/tes1.jpg')}}" alt="">
-                        </div>
-                        <div class="content">
-                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</p>
-                            <h2>رزا ایزدی</h2>
-                            <h4>موسس</h4>
-                        </div>
-                        <div class="btm-big-icon">
-                            <i class="far fa-comments"></i>
-                        </div>
-                    </div>
-                    <!-- Single -->
-                    <div class="testimonial-item rtl">
-                        <div class="thumbnail">
-                            <img src="{{asset('assets/img/tes2.jpg')}}" alt="">
-                        </div>
-                        <div class="content">
-                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</p>
-                            <h2>رزا ایزدی</h2>
-                            <h4>موسس</h4>
-                        </div>
-                        <div class="btm-big-icon">
-                            <i class="far fa-comments"></i>
-                        </div>
-                    </div>
-                    <!-- Single -->
-                    <div class="testimonial-item">
-                        <div class="thumbnail">
-                            <img src="{{asset('assets/img/tes1.jpg')}}" alt="">
-                        </div>
-                        <div class="content">
-                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</p>
-                            <h2>رزا ایزدی</h2>
-                            <h4>موسس</h4>
-                        </div>
-                        <div class="btm-big-icon">
-                            <i class="far fa-comments"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- End Testimonial Area -->
 
 @include('client.layouts.footer')
 

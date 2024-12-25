@@ -10,8 +10,9 @@
             <div class="row">
                 <div class="mt-4">
                     <div class="card border-0 p-4 rounded shadow">
-
-                        <form action="{{route('admin.product.store')}}" method="POST" class="mt-4">
+                        @include('admin.layouts.alert')
+                        <form action="{{route('admin.product.store')}}" method="POST" enctype="multipart/form-data"
+                              class="mt-4">
                             @csrf
                             @include('admin.product.partial.entry',['data'=>null])
 
