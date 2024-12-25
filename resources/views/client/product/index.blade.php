@@ -63,7 +63,7 @@
                                                 </a>
                                                 <div class="product-overly-btn">
                                                     <ul>
-                                                        <li><a href="#" class="add-to-cart" id="{{$product->id}}"><i
+                                                        <li><a class="add-to-cart" id="{{$product->id}}"><i
                                                                     class="fas fa-shopping-cart"></i><span>به سبد خرید اضافه کنید</span></a>
                                                         </li>
                                                     </ul>
@@ -136,7 +136,7 @@
                                                         <div class="product-hover-action">
                                                             <ul>
                                                                 <li>
-                                                                    <a href="#" class="add-to-cart" id="{{$product->id}}" title="Add to Cart">
+                                                                    <a class="add-to-cart" id="{{$product->id}}" title="Add to Cart">
                                                                         <i class="fas fa-shopping-cart"></i>
                                                                     </a>
                                                                 </li>
@@ -183,9 +183,31 @@
 
 @include('client.layouts.footer')
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function () {
         $(".add-to-cart").click(function () {
+
+            var isLoggedIn = {{ auth()->check() ? 'true' : 'false' }};
+
+            if (!isLoggedIn) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'ورود به حساب کاربری',
+                    text: 'برای افزودن محصول به سبد خرید، ابتدا وارد حساب کاربری خود شوید.',
+                    confirmButtonText: 'باشه',
+                    showCancelButton: true,
+                    cancelButtonText: 'لغو',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "{{ route('auth.login') }}";
+                    }
+                });
+                return;
+            }
+
             var idValue = $(this).attr("id");
             var url = "{{ route('client.cart.store', ['product_id' => '__ID__']) }}".replace('__ID__', idValue);
 

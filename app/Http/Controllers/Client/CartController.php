@@ -50,7 +50,6 @@ class CartController extends Controller
             return response()->json('ok', ResponseAlias::HTTP_OK);
         } catch (Exception $exception) {
             return response()->json($exception->getMessage());
-
         }
     }
 

@@ -1,18 +1,19 @@
 <?php
 
+use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ContactController as AdminContactController;
+use App\Http\Controllers\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Client\BlogController;
-use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\ContactController;
-use App\Http\Controllers\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\Client\HomeController;
-use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\ProductController;
-use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Client\UserController as ClientController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
@@ -47,6 +48,9 @@ Route::name('client.')
             ->group(function () {
                 Route::get('profile', [HomeController::class, 'profile'])
                     ->name('profile');
+
+                Route::put('user/update', [ClientController::class, 'update'])
+                    ->name('user.update');
 
                 Route::resource('cart', CartController::class)->except('show', 'edit', 'update');
                 Route::resource('order', OrderController::class);

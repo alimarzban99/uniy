@@ -37,7 +37,7 @@
                                         <a href="{{route('admin.blog.edit',['blog'=>$blog->id])}}" class="btn btn-icon btn-pills btn-soft-success">
                                             <i class="uil uil-pen"></i>
                                         </a>
-                                        <a href="#" class="btn btn-icon btn-pills btn-soft-danger blog-delete" id="{{$blog->id}}">
+                                        <a class="btn btn-icon btn-pills btn-soft-danger blog-delete" id="{{$blog->id}}">
                                             <i class="uil uil-trash"></i>
                                         </a>
                                     </td>

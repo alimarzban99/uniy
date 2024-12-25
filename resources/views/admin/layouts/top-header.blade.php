@@ -1,7 +1,7 @@
 <div class="top-header">
     <div class="header-bar d-flex justify-content-between border-bottom">
         <div class="d-flex align-items-center">
-            <a href="#" class="logo-icon">
+            <a class="logo-icon">
                 <img src="{{asset('assets/img/logo.png')}}" height="30" class="small" alt="">
                 <span class="big">
                                     <img src="{{asset('assets/img/logo.png')}}" height="24" class="logo-light-mode"

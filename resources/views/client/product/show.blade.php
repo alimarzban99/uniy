@@ -52,7 +52,8 @@
                         <!-- Add To Cart -->
                         <div class="quantity-add-cart">
                             <div class="cart-btn">
-                                <a class="button-1 add-to-cart" id="{{$product->id}}"><i class="fas fa-shopping-cart"></i> به سبد خرید اضافه کنید</a>
+                                <a class="button-1 add-to-cart" id="{{$product->id}}"><i
+                                        class="fas fa-shopping-cart"></i> به سبد خرید اضافه کنید</a>
                             </div>
                         </div>
 
@@ -82,13 +83,11 @@
                             @endif
                             <!-- Thumbnail -->
                             <div class="product-thumbnail">
-                                <a href="#">
-                                    <img src="{{asset('storage/'.$related->image)}}" alt="product">
-                                </a>
+                                <img src="{{asset('storage/'.$related->image)}}" alt="product">
                                 <div class="product-overly-btn">
                                     <ul>
                                         <li>
-                                            <a href="#" class="add-to-cart" id="{{$related->id}}">
+                                            <a class="add-to-cart" id="{{$related->id}}">
                                                 <i class="fas fa-shopping-cart"></i>
                                                 <span>به سبد خرید اضافه کنید</span>
                                             </a>
@@ -126,10 +125,31 @@
 </section>
 
 @include('client.layouts.footer')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     $(document).ready(function () {
         $(".add-to-cart").click(function () {
+            var isLoggedIn = {{ auth()->check() ? 'true' : 'false' }};
+
+            if (!isLoggedIn) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'ورود به حساب کاربری',
+                    text: 'برای افزودن محصول به سبد خرید، ابتدا وارد حساب کاربری خود شوید.',
+                    confirmButtonText: 'باشه',
+                    showCancelButton: true,
+                    cancelButtonText: 'لغو',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "{{ route('auth.login') }}";
+                    }
+                });
+                return;
+            }
+
             var idValue = $(this).attr("id");
             var url = "{{ route('client.cart.store', ['product_id' => '__ID__']) }}".replace('__ID__', idValue);
 

@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Services\Client\HomeService;
+use App\Services\Client\OrderService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -41,6 +41,7 @@ class HomeController extends Controller
      */
     public function profile()
     {
-        return view('client.profile');
+        $orders = app(OrderService::class)->getList();
+        return view('client.profile', compact('orders'));
     }
 }

@@ -16,14 +16,13 @@
                                data-bs-target="#order" role="tab" aria-controls="order" aria-selected="true">سفارشات<i
                                     class="far fa-file-alt"></i></a>
                         </li>
-
                         <li class="nav-item" role="presentation">
-                            <a href="#" class="nav-link" id="acdetails-tab" data-bs-toggle="tab"
-                               data-bs-target="#acdetails" role="tab" aria-controls="acdetails" aria-selected="false">جزئیات
-                                حساب <i class="fas fa-user"></i></a>
+                            <a href="#" class="nav-link" id="user-tab" data-bs-toggle="tab" data-bs-target="#user"
+                               role="tab" aria-controls="user" aria-selected="false">جزئیات حساب<i
+                                    class="fas fa-user"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('auth.logout')}}" class="nav-link" title="Logout">خروج <i
+                            <a href="{{route('auth.logout')}}" class="nav-link" title="Logout">خروج<i
                                     class="fas fa-sign-out-alt"></i></a>
                         </li>
                     </ul>
@@ -32,7 +31,7 @@
             <div class="col-md-9 rtl">
                 <div class="my-account-main-content">
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="tab-pane fade show active" id="order" role="tabpanel" aria-labelledby="order-tab">
                             <div class="my-account-main-content-item">
                                 <h2>سفارشات</h2>
                                 <div class="table-responsive text-center">
@@ -42,42 +41,35 @@
                                             <th>سفارش</th>
                                             <th>تاریخ</th>
                                             <th>وضعیت</th>
-                                            <th>جمع</th>
+                                            <th>قیمت</th>
                                             <th>عمل</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>دی 22, 1380</td>
-                                            <td>انتظار</td>
-                                            <td>T3000</td>
-                                            <td><a href="cart.html">چشم انداز</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Nov 22, 2019</td>
-                                            <td>تایید شده</td>
-                                            <td>T200</td>
-                                            <td><a href="cart.html">چشم انداز</a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Jan 12, 2020</td>
-                                            <td>در انتظار</td>
-                                            <td>T990</td>
-                                            <td><a href="cart.html">چشم انداز</a></td>
-                                        </tr>
+                                        @foreach($orders as $order)
+                                            <tr>
+                                                <td>{{$order->id}}</td>
+                                                <td>{{$order->created_at}}</td>
+                                                <td>{{$order->status}}</td>
+                                                <td>{{$order->price}}تومان </td>
+                                                <td><a href="cart.html">حذف</a></td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="acdetails" role="tabpanel" aria-labelledby="acdetails-tab">
-
+                        <div class="tab-pane fade" id="user" role="tabpanel" aria-labelledby="user-tab">
                             <div class="my-account-main-content-item">
                                 <h2>جزئیات حساب</h2>
-                                <form action="#">
+                                <form action="{{route('client.user.update')}}" method="POST">
+                                    @method('PUT')
+                                    @csrf
+                                    <div class="single-field">
+                                        <label>ایمیل</label>
+                                        <input type="text" name="email" disabled value="{{auth()->user()->email}}">
+                                    </div>
                                     <div class="single-field">
                                         <label>نام</label>
                                         <input type="text" name="username" value="{{auth()->user()->username}}">
@@ -86,10 +78,7 @@
                                         <label>آدرس</label>
                                         <input type="text" name="address" value="{{auth()->user()->address}}">
                                     </div>
-                                    <div class="single-field">
-                                        <label>ایمیل</label>
-                                        <input type="text" name="email" value="{{auth()->user()->email}}">
-                                    </div>
+
 
                                     <div class="single-field">
                                         <label>موبایل</label>
