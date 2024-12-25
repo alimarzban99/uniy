@@ -14,7 +14,7 @@
                         <div class="tab-content product-details-large">
                             <div class="tab-pane fade show active" role="tabpanel">
                                 <div class="modal_tab_img">
-                                    <a href="#"><img src="{{asset('storage/'.$product->image)}}" alt="img"></a>
+                                    <img src="{{asset('storage/'.$product->image)}}" alt="img">
                                 </div>
                             </div>
                         </div>
@@ -51,11 +51,8 @@
                         </div>
                         <!-- Add To Cart -->
                         <div class="quantity-add-cart">
-								<span class="quantity">
-				  					<input type="number" min="1" max="1000" step="1" value="1">
-								</span>
                             <div class="cart-btn">
-                                <a class="button-1" href="#"><i class="fas fa-shopping-cart"></i> به سبد خرید اضافه کنید</a>
+                                <a class="button-1 add-to-cart" id="{{$product->id}}"><i class="fas fa-shopping-cart"></i> به سبد خرید اضافه کنید</a>
                             </div>
                         </div>
 
@@ -91,7 +88,7 @@
                                 <div class="product-overly-btn">
                                     <ul>
                                         <li>
-                                            <a href="#" class="add-to-cart" id="{{$product->id}}">
+                                            <a href="#" class="add-to-cart" id="{{$related->id}}">
                                                 <i class="fas fa-shopping-cart"></i>
                                                 <span>به سبد خرید اضافه کنید</span>
                                             </a>

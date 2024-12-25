@@ -29,7 +29,7 @@
     $count = app(\App\Services\Client\CartService::class)->count();
 @endphp
 
-<!-- Start Header Area -->
+    <!-- Start Header Area -->
 <header class="header">
     <!-- Header Top -->
     <div class="header-top">
@@ -47,15 +47,17 @@
                     <div class="header-top-right">
                         <ul>
                             <li class="need-help">
-{{--                                @dd($cartCount)--}}
                                 @if($count > 0)
                                     <div class="col-2 align-self-center">
-                                        <div class="header-mini-cart-icon">
-                                            <div class="icon" id="minicart_open">
-                                                <i class="fas fa-shopping-basket"></i>
-                                                <span>{{$count}}</span>
+                                        <a href="{{route('client.cart.index')}}">
+                                            <div class="header-mini-cart-icon">
+                                                <div class="icon">
+                                                    <i class="fas fa-shopping-basket"></i>
+                                                    <span>{{$count}}</span>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </a>
+
                                     </div>
                                 @endif
 
@@ -128,5 +130,4 @@
 </header>
 
 @include('client.layouts.mobile-navbar')
-@include('client.layouts.cart')
 

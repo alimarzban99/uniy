@@ -200,7 +200,7 @@
                 type: 'POST',
                 dataType: 'json',
                 success: function () {
-                   /* window.location.href = "{{route('client.cart.index')}}"*/
+                   window.location.href = "{{route('client.cart.index')}}"
                 },
             })
 
