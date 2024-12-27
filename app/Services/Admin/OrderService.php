@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin;
 
+use App\Enums\OrderStatus;
 use App\Models\Order;
 use App\Services\Admin\Trait\UploadImageTrait;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -50,5 +51,15 @@ class OrderService
         return $this->order->query()
             ->findOrFail($id)
             ->update(['status' => $status]);
+    }
+
+    /**
+     * @return int
+     */
+    public function report(): int
+    {
+        return $this->order->query()
+            ->where('status', '=', OrderStatus::NEW->value)
+            ->count();
     }
 }

@@ -63,4 +63,14 @@ readonly class UserService
         $this->user->query()->create($only);
     }
 
+    /**
+     * @return int
+     */
+    public function report(): int
+    {
+        return $this->user->query()
+            ->where('is_admin', '=', false)
+            ->count();
+    }
+
 }

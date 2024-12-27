@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin;
 
+use App\Enums\Status;
 use App\Http\DTO\Admin\Product\ProductStoreDTO;
 use App\Http\DTO\Admin\Product\ProductUpdateDTO;
 use App\Models\Product;
@@ -100,6 +101,16 @@ class ProductService
     {
         $product = $this->product->query()->findOrFail($id);
         return $product->update(['is_featured' => !$product->is_featured]);
+    }
+
+    /**
+     * @return int
+     */
+    public function report(): int
+    {
+        return $this->product->query()
+            ->where('status', '=', Status::PUBLISHED->value)
+            ->count();
     }
 
 }

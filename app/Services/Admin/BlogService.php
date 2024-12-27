@@ -2,6 +2,7 @@
 
 namespace App\Services\Admin;
 
+use App\Enums\Status;
 use App\Http\DTO\Admin\Blog\BlogStoreDTO;
 use App\Http\DTO\Admin\Blog\BlogUpdateDTO;
 use App\Models\Blog;
@@ -89,5 +90,14 @@ class BlogService
         return app(CategoryService::class)->list();
     }
 
+    /**
+     * @return int
+     */
+    public function report(): int
+    {
+        return $this->blog->query()
+            ->where('status', '=', Status::PUBLISHED->value)
+            ->count();
+    }
 
 }
