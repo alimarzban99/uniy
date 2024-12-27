@@ -19,10 +19,11 @@ return new class extends Migration {
             $table->unsignedBigInteger('cart_id');
             $table->foreign('cart_id')->references('id')->on('cart_data')->cascadeOnDelete();
 
-            $table->text('note');
+            $table->text('note')->nullable();
 
             $table->bigInteger('price');
             $table->tinyInteger('status')->index();
+            $table->tinyInteger('payment_method')->index();
 
             $table->timestamps();
             $table->softDeletes();

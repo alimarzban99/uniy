@@ -110,6 +110,18 @@ readonly class CartService
     }
 
     /**
+     * @param int $userId
+     * @return object|null
+     */
+    public function lastValidCart(int $userId): ?object
+    {
+       return $this->cartData->query()
+            ->where('user_id', '=', $userId)
+            ->where('status', '=', CartStatus::NEW->value)
+            ->first();
+    }
+
+    /**
      * @param CartStoreDTO $storeDTO
      * @return object|null
      */

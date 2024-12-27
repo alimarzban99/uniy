@@ -2,7 +2,6 @@
 <html class="no-js" lang="fa">
 
 @include('client.layouts.navbar',['title'=>'بررسی'])
-
 @include('client.layouts.breadcrumb',['title' => 'بررسی'])
 
 <!-- Start Checkout Page -->
@@ -49,18 +48,19 @@
                     <h2>روش پرداخت</h2>
                     <div class="form-check">
                         <label class="inline">
-                            <input class="form-check-input" type="radio" name="payment_method" value="cash" checked>
+                            <input class="form-check-input" type="radio" name="payment_method" value="1" checked>
                             <span class="input"></span>پرداخت نقدی هنگام تحویل
                         </label>
                     </div>
                     <div class="form-check">
                         <label class="inline">
-                            <input class="form-check-input" type="radio" name="payment_method" value="online">
+                            <input class="form-check-input" type="radio" name="payment_method" value="2" disabled>
                             <span class="input"></span>درگاه اینترنتی
                         </label>
                     </div>
                     <button type="submit" class="button-1 submit-order mt-10">ثبت سفارش</button>
                 </div>
+                @include('client.layouts.alert')
             </div>
         </div>
     </div>
@@ -68,13 +68,11 @@
 <!-- End Checkout Page -->
 
 @include('client.layouts.footer')
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function () {
-        // هنگام کلیک روی دکمه ثبت سفارش
         $(".submit-order").on("click", function (event) {
-            event.preventDefault(); // جلوگیری از ارسال فرم (در صورت وجود)
-
+            event.preventDefault();
             let note = $("textarea[name='note']").val();
             let paymentMethod = $("input[name='payment_method']:checked").val();
 
@@ -84,11 +82,31 @@
                 data: {
                     note: note,
                     payment_method: paymentMethod,
-                    _token: $('meta[name="csrf-token"]').attr('content') // برای امنیت Laravel
+                    _token: $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function () {
-                    window.location.href = "{{route('client.cart.index')}}"
+                    window.location.href = "{{route('client.profile')}}"
                 },
+                error: function(xhr) {
+                    if (xhr.responseText === '"cart_not_fount"') {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'خطا',
+                            text: 'سبد خرید برای تسویه وجود ندارد',
+                        });
+
+                        setTimeout(function() {
+                            window.location.href = "{{route('client.product.index')}}"
+                        }, 1000);
+
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'خطا',
+                            text: 'خطای ناشناخته به وجود امده',
+                        });
+                    }
+                }
             })
         });
     });

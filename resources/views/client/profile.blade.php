@@ -50,9 +50,14 @@
                                             <tr>
                                                 <td>{{$order->id}}</td>
                                                 <td>{{$order->created_at}}</td>
-                                                <td>{{$order->status}}</td>
-                                                <td>{{$order->price}}تومان </td>
-                                                <td><a href="cart.html">حذف</a></td>
+                                                <td>{{\App\Enums\OrderStatus::trans(value: $order->status)}}</td>
+                                                <td>{{$order->price}}تومان</td>
+                                                <td>
+                                                    <a class="btn btn-icon btn-pills btn-soft-danger order-delete"
+                                                       id="{{$order->id}}">
+                                                        حذف
+                                                    </a>
+                                                </td>
                                             </tr>
                                         @endforeach
                                         </tbody>
@@ -108,5 +113,29 @@
 
 @include('client.layouts.footer')
 
+<script>
+    $(document).ready(function () {
+        $(".order-delete").click(function () {
+            var idValue = $(this).attr("id");
+            var url = "{{ route('client.order.destroy', ['order' => '__ID__']) }}".replace('__ID__', idValue);
 
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                dataType: 'json',
+                success: function () {
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 500);
+                },
+            })
+        });
+    });
+</script>
 </html>

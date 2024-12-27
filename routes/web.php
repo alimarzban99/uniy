@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
@@ -67,7 +68,7 @@ Route::prefix('admin')
     ->group(function () {
         Route::get('dashboard', [AdminHomeController::class, 'dashboard'])->name('dashboard');
 
-        Route::resource('order', AdminBlogController::class);
+        Route::resource('order', AdminOrderController::class);
         Route::resource('blog', AdminBlogController::class);
         Route::resource('product', AdminProductController::class);
         Route::resource('contact', AdminContactController::class);
@@ -76,6 +77,9 @@ Route::prefix('admin')
 
         Route::post('product/featured/{product}', [AdminProductController::class, 'featured'])
             ->name('product.featured');
+
+        Route::post('order/{order}/change-status', [AdminOrderController::class, 'changeStatus'])
+            ->name('order.change_status');
 
 
     });

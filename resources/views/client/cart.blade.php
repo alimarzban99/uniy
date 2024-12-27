@@ -115,7 +115,6 @@
                         window.location.href = "{{route('client.product.index')}}"
                     } else {
                         setTimeout(function () {
-
                             window.location.reload();
                         }, 500);
                     }

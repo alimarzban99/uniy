@@ -1,10 +1,6 @@
 <?php
 
 return [
-    'installment' => [
-        'cash' => 'نقدی',
-        'installments' => 'اقساط',
-    ],
 
     'status' => [
         'published' => 'فعال',
@@ -13,6 +9,18 @@ return [
         'archived' => 'آرشیو',
         'unsubscribed' => 'لغو اشتراک',
         'locked' => 'قفل شده',
+    ],
+
+    'order_status' => [
+        'new' => 'جدید',
+        'accepted' => 'قبول شده',
+        'delivered' => 'ارسال شده',
+        'rejected' => 'رد شده',
+    ],
+
+    'payment_methods' => [
+        'cash' => 'پرداخت نقدی',
+        'online' => 'درگاه',
     ],
 
 ];

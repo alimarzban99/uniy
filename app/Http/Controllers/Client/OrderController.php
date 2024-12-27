@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Models\Order;
-use App\Services\Admin\OrderService;
+use App\Http\DTO\Client\Order\OrderStoreDTO;
+use App\Http\Requests\Client\Order\OrderStoreRequest;
+use App\Services\Client\OrderService;
+use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
-use Throwable;
 
 class OrderController extends Controller
 {
@@ -16,15 +16,18 @@ class OrderController extends Controller
     {
     }
 
-    public function index()
+    /**
+     * @param OrderStoreRequest $request
+     * @return JsonResponse
+     */
+    public function store(OrderStoreRequest $request)
     {
-        $orders = $this->service->index();
-        return view('admin.order.index', compact('orders'));
-    }
-
-    public function show(Order $order)
-    {
-        return view('admin.order.show', compact('order'));
+        try {
+            $this->service->store(OrderStoreDTO::fromRequest($request));
+            return response()->json('ok', ResponseAlias::HTTP_OK);
+        } catch (Exception $exception) {
+            return response()->json($exception->getMessage(), ResponseAlias::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -36,23 +39,9 @@ class OrderController extends Controller
         try {
             $this->service->destroy($id);
             return response()->json('ok', ResponseAlias::HTTP_OK);
-        } catch (Throwable $exception) {
+        } catch (Exception $exception) {
             return response()->json($exception->getMessage(), ResponseAlias::HTTP_BAD_REQUEST);
         }
     }
 
-    /**
-     * @param Request $request
-     * @param int $id
-     * @return JsonResponse
-     */
-    public function changeStatus(Request $request, int $id)
-    {
-        try {
-            $this->service->changeStatus($id, $request->input('status'));
-            return response()->json('ok', ResponseAlias::HTTP_OK);
-        } catch (Throwable $exception) {
-            return response()->json($exception->getMessage(), ResponseAlias::HTTP_BAD_REQUEST);
-        }
-    }
 }
