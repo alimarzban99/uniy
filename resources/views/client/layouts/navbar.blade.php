@@ -4,6 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <title>{{$title}}</title>
+    <meta name="description" content="فروشگاه میوه - {{$title}}">
+    <meta name="keywords" content="{{$title}}">
     <link rel="icon" href="{{asset('assets/img/icon.png')}}" type="image/gif" sizes="16x16">
     <link rel="icon" href="{{asset('assets/img/icon.png')}}" type="image/gif" sizes="18x18">
     <link rel="icon" href="{{asset('assets/img/icon.png')}}" type="image/gif" sizes="20x20">
@@ -90,7 +92,7 @@
                     </div>
                     <div class="mobile-bar">
                         <div class="canvas_open">
-                            <a href="javascript:void(0)">
+                            <a>
                                 <span></span>
                                 <span></span>
                                 <span></span>

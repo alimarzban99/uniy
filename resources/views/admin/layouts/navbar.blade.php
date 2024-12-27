@@ -2,12 +2,9 @@
     <meta charset="utf-8">
     <title> {{$title}} </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Premium Bootstrap 4 Landing Page Template">
-    <meta name="keywords" content="Appointment, Booking, System, Dashboard, Health">
-    <meta name="author" content="Shreethemes">
-    <meta name="email" content="support@shreethemes.in">
-    <meta name="website" content=" ">
-    <meta name="Version" content="v1.2.0">
+    <meta name="description" content="فروشگاه میوه - {{$title}}">
+    <meta name="keywords" content="{{$title}}">
+    <meta name="author" content="AliMarzban">
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <!-- favicon -->
     <link rel="icon" href="{{asset('assets/img/icon.png')}}" type="image/gif" sizes="16x16">
